@@ -1,12 +1,12 @@
 import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
-import logger from "use-reducer-logger";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Product from "../coomponents/Product";
 import { Helmet } from "react-helmet-async";
 import LoadingBox from "../coomponents/LoadingBox";
 import MessageBox from "../coomponents/MessageBox";
+// import data from '../data';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -22,12 +22,11 @@ const reducer = (state, action) => {
 };
 
 function HomeScreen() {
-  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
     loading: true,
     error: "",
   });
-
   // const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -39,27 +38,25 @@ function HomeScreen() {
         dispatch({ type: "FETCH_FAIL", payload: err.message });
       }
 
-      //setProducts(result.data);
+      // setProducts(result.data);
     };
     fetchData();
   }, []);
-
   return (
     <div>
       <Helmet>
-        <title>Paichoo</title>
+        <title>Amazona</title>
       </Helmet>
-      <h1> Featured Products </h1>
-      <div className='products'>
+      <h1>Featured Products</h1>
+      <div className="products">
         {loading ? (
           <LoadingBox />
         ) : error ? (
-          <MessageBox variant='danger'> {error}</MessageBox>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          //converting products into jsx using map function
           <Row>
             {products.map((product) => (
-              <Col sm={6} md={4} lg={3} className='mb-3'>
+              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
                 <Product product={product}></Product>
               </Col>
             ))}
@@ -69,5 +66,4 @@ function HomeScreen() {
     </div>
   );
 }
-
 export default HomeScreen;

@@ -27,6 +27,7 @@ const reducer = (state, action) => {
   }
 };
 
+//slug to show in the url
 function ProductScreen() {
   const navigate = useNavigate();
   const params = useParams();
@@ -55,9 +56,9 @@ function ProductScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
   const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x) => x._id === product._id); //find current exist in cart or not
+    const existItem = cart.cartItems.find((x) => x._id === product._id); // items in cart
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(`/api/products/${product._id}`); //fetching data
     if (data.countInStock < quantity) {
       window.alert("Sorry. Product is out of stock");
       return;
@@ -98,7 +99,7 @@ function ProductScreen() {
                 numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
-            <ListGroup.Item>Price : ${product.Price}</ListGroup.Item>
+            <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
             <ListGroup.Item>
               Description:
               <p>{product.description}</p>
@@ -113,7 +114,7 @@ function ProductScreen() {
               <ListGroup.Item>
                 <Row>
                   <Col>Price: </Col>
-                  <Col>${product.Price}</Col>
+                  <Col>${product.price}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>

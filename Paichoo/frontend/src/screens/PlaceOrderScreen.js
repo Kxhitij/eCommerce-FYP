@@ -7,11 +7,11 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
+import LoadingBox from "../coomponents/LoadingBox";
 import { Store } from "../Store";
 import CheckoutSteps from "../coomponents/CheckoutSteps";
 import { toast } from "react-toastify";
 import { getError } from "../utils";
-import LoadingBox from "../coomponents/LoadingBox";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -25,6 +25,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export default function PlaceOrderScreen() {
     cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
   cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
-  cart.taxPrice = round2(0.13 * cart.itemsPrice);
+  cart.taxPrice = round2(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
   const placeOrderHandler = async () => {
@@ -130,7 +131,7 @@ export default function PlaceOrderScreen() {
                       <Col md={3}>
                         <span>{item.quantity}</span>
                       </Col>
-                      <Col md={3}>${item.Price}</Col>
+                      <Col md={3}>${item.price}</Col>
                     </Row>
                   </ListGroup.Item>
                 ))}

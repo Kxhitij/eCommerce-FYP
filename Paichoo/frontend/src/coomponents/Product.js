@@ -41,7 +41,7 @@ function Product(props) {
 
         <Rating rating={product.rating} numReviews={product.numReviews} />
 
-        <Card.Text>${product.Price}</Card.Text>
+        <Card.Text>${product.price}</Card.Text>
         {product.countInStock === 0 ? (
           <Button variant='light' disabled>
             {" "}
